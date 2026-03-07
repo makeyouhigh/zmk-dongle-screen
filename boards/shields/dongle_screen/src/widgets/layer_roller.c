@@ -32,7 +32,7 @@ static void layer_roller_set_sel(lv_obj_t *roller, struct layer_roller_state sta
     } else {
         lv_obj_set_style_text_color(roller, lv_color_white(), LV_PART_SELECTED);
     }
-    lv_roller_set_selected(roller, layer_select_id[state.index], LV_ANIM_ON);
+    lv_roller_set_selected(roller, layer_select_id[idx], LV_ANIM_ON);
 }
 
 static void layer_roller_update_cb(struct layer_roller_state state) {
