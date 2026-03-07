@@ -94,7 +94,7 @@ lv_obj_t *zmk_display_status_screen()
     zmk_widget_layer_roller_init(&layer_roller_widget, screen);
 //    lv_obj_align(zmk_widget_layer_roller_obj(&layer_roller_widget), LV_ALIGN_LEFT_MID, 10, 0);
 //wpm 위젯 빼고, 레이어 위젯 위치 위로    
-    lv_obj_align(zmk_widget_layer_roller_obj(&layer_roller_widget), LV_ALIGN_LEFT_MID, 10, -10);
+    lv_obj_align(zmk_widget_layer_roller_obj(&layer_roller_widget), LV_ALIGN_LEFT_MID, 10, -30);
 
 #endif
 
