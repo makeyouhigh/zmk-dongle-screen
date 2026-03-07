@@ -11,7 +11,7 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
-static char layer_names_buffer[256] = {0}; // Buffer for concatenated layer names
+static char layer_names_buffer[512] = {0}; // Buffer for concatenated layer names
 
 static int layer_select_id[8] = {6, 4, 1, 0, 2, 5, 3, 7}; // Select order of layers.
 
