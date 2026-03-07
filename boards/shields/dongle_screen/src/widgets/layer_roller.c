@@ -176,7 +176,7 @@ int zmk_widget_layer_roller_init(struct zmk_widget_layer_roller *widget, lv_obj_
     sys_slist_append(&widgets, &widget->node);
     
 //    widget_layer_roller_init();
-    _widget_layer_status_init();
+    _widget_layer_roller_init();
     return 0;
 }
 
