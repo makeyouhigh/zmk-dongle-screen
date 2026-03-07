@@ -167,7 +167,7 @@ int zmk_widget_layer_roller_init(struct zmk_widget_layer_roller *widget, lv_obj_
     }
 
     lv_roller_set_options(widget->obj, layer_names_buffer, LV_ROLLER_MODE_NORMAL);
-    lv_roller_set_visible_row_count(widget->obj, 3);
+    lv_roller_set_visible_row_count(widget->obj, 5);
     
     //lv_obj_add_event_cb(widget->obj, mask_event_cb, LV_EVENT_ALL, NULL);
     
