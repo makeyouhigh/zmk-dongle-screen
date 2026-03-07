@@ -95,8 +95,8 @@ int zmk_widget_layer_status_init(struct zmk_widget_layer_status *widget, lv_obj_
 
     sys_slist_append(&widgets, &widget->node);
 
-//    widget_layer_status_init();
-    _widget_layer_status_init();
+    widget_layer_status_init();
+
 
     return 0;
 }
