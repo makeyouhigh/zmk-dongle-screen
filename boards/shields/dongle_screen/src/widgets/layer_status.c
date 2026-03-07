@@ -63,11 +63,24 @@ static void layer_status_update_cb(struct layer_status_state state)
 
 static struct layer_status_state layer_status_get_state(const zmk_event_t *eh)
 {
-    uint8_t index = zmk_keymap_highest_layer_active();
+    // 이벤트 데이터에서 직접 현재 레이어 번호를 낚아챕니다.
+    const struct zmk_layer_state_changed *ev = as_zmk_layer_state_changed(eh);
+    
+    // 이벤트가 있으면 그 값을, 없으면 시스템 현재값을 가져옵니다.
+    uint8_t index = (ev != NULL) ? ev->layer : zmk_keymap_highest_layer_active();
+
     return (struct layer_status_state){
         .index = index,
         .label = zmk_keymap_layer_name(index)};
 }
+
+//static struct layer_status_state layer_status_get_state(const zmk_event_t *eh)
+//{
+//    uint8_t index = zmk_keymap_highest_layer_active();
+//    return (struct layer_status_state){
+//        .index = index,
+//        .label = zmk_keymap_layer_name(index)};
+//}
 
 ZMK_DISPLAY_WIDGET_LISTENER(widget_layer_status, struct layer_status_state, layer_status_update_cb,
                             layer_status_get_state)
@@ -82,7 +95,7 @@ int zmk_widget_layer_status_init(struct zmk_widget_layer_status *widget, lv_obj_
 
     sys_slist_append(&widgets, &widget->node);
 
-    widget_layer_status_init();
+//    widget_layer_status_init();
     return 0;
 }
 
