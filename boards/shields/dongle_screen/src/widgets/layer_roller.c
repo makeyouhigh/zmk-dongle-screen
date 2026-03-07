@@ -13,9 +13,9 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 static char layer_names_buffer[256] = {0}; // Buffer for concatenated layer names
 
-static int layer_select_id[6] = {2, 4, 3, 1, 0}; // Select order of layers.
+static int layer_select_id[8] = {6, 4, 1, 0, 2, 5, 3, 7}; // Select order of layers.
 
-static int layer_display_order[6] = {4, 3, 0, 2, 1}; // Display order of layers.
+static int layer_display_order[8] = {6, 4, 1, 0, 2, 5, 3, 7}; // Display order of layers.
 
 static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
 
@@ -24,6 +24,7 @@ struct layer_roller_state {
 };
 
 static void layer_roller_set_sel(lv_obj_t *roller, struct layer_roller_state state) {
+    uint8_t idx = (state.index > 7) ? 7 : state.index;
     if (state.index == 1) {
         lv_obj_set_style_text_color(roller, lv_palette_main(LV_PALETTE_ORANGE), LV_PART_SELECTED);
     } else if (state.index == 4) {
