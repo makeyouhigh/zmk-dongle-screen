@@ -25,28 +25,32 @@ struct layer_status_state
 
 static void set_layer_symbol(lv_obj_t *label, struct layer_status_state state)
 {
+    /* 1. 버퍼 크기를 32로 확장 (16은 Shift 키 상태값을 덮어버릴 정도로 좁습니다) */
+    char text[32] = {};
+
     if (state.label == NULL)
     {
-        char text[7] = {};
-
-        sprintf(text, "%i", state.index);
-
+        snprintf(text, sizeof(text), "%i", state.index);
+        lv_label_set_recolor(label, false);
         lv_label_set_text(label, text);
     }
     else
     {
-
-        char text[16] = {};
-        if (strcmp(state.label,"Orange") == 0) {
+        /* 2. 컬러 태그 로직 보정 및 닫는 샵(#) 추가 (반응속도 해결) */
+        if (strcmp(state.label, "Orange") == 0) {
             const char *layer_color = "ffa500";
-            snprintf(text, sizeof(text), "#%s %s", layer_color, state.label);
-        } else if (strcmp(state.label,"Green") == 0) {
+            snprintf(text, sizeof(text), "#%s %s#", layer_color, state.label);
+            lv_label_set_recolor(label, true);
+        } else if (strcmp(state.label, "Green") == 0) {
             const char *layer_color = "00ff00";
-            snprintf(text, sizeof(text), "#%s %s", layer_color, state.label);
+            snprintf(text, sizeof(text), "#%s %s#", layer_color, state.label);
+            lv_label_set_recolor(label, true);
         } else {
+            /* 3. 일반 레이어는 색상 기능을 꺼야 메모리 간섭이 안 일어납니다 */
             snprintf(text, sizeof(text), "%s", state.label);
+            lv_label_set_recolor(label, false);
         }
-        lv_label_set_recolor(label, true);
+        
         lv_label_set_text(label, text);
     }
 }
