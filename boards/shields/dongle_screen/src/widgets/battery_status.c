@@ -111,7 +111,7 @@ static void event_cb(lv_event_t * e)
     else {
         txt_area.x1 = dsc->draw_area->x2 + 5;
         txt_area.x2 = txt_area.x1 + txt_size.x - 1;
-        label_dsc.color = lv_color_black();
+        label_dsc.color = lv_palette_darken(LV_PALETTE_RED, 1);
     }
 
     txt_area.y1 = dsc->draw_area->y1 + (lv_area_get_height(dsc->draw_area) - txt_size.y) / 2;
