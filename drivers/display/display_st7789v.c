@@ -47,6 +47,8 @@ struct st7789v_config {
 	uint8_t rgb_param[3];
 	uint16_t height;
 	uint16_t width;
+	uint16_t x_offset;
+	uint16_t y_offset;
 };
 
 struct st7789v_data {
@@ -239,24 +241,15 @@ static int st7789v_set_orientation(const struct device *dev,
 	uint16_t x_offset = 0;
 	uint16_t y_offset = 0;
 
-	uint16_t row_offset = 0;
-	uint16_t col_offset = 0;
-
-	// if (config->width < 240) {
-		/* 135x240 display */
-		row_offset = data->y_offset;
-		col_offset = data->x_offset;
-	// } else {
-	// 	/* 240x320 and 240x240 displays */
-	// 	row_offset = (320 - config->height);
-	// 	col_offset = (240 - config->width);
-	// }
+	/* Always derive margins from the panel, not the previous rotation. */
+	uint16_t row_offset = config->y_offset;
+	uint16_t col_offset = config->x_offset;
 
 	switch (orientation) {
 	case DISPLAY_ORIENTATION_NORMAL:
 		tx_data |= ST7789V_MADCTL_MV_NORMAL_MODE;
-		x_offset = data->x_offset;
-		y_offset = data->y_offset;
+		x_offset = col_offset;
+		y_offset = row_offset;
 		break;
 
 	case DISPLAY_ORIENTATION_ROTATED_90:
@@ -273,8 +266,8 @@ static int st7789v_set_orientation(const struct device *dev,
 
 	case DISPLAY_ORIENTATION_ROTATED_270:
 		tx_data |= (ST7789V_MADCTL_MX_RIGHT_TO_LEFT | ST7789V_MADCTL_MV_REVERSE_MODE);
-		x_offset = data->y_offset;
-		y_offset = data->x_offset;
+		x_offset = row_offset;
+		y_offset = col_offset;
 		break;
 
 	default:
@@ -460,6 +453,8 @@ static const struct display_driver_api st7789v_api = {
 		.nvgam_param = DT_INST_PROP(inst, nvgam_param),                                    \
 		.ram_param = DT_INST_PROP(inst, ram_param),                                        \
 		.rgb_param = DT_INST_PROP(inst, rgb_param),                                        \
+		.x_offset = DT_INST_PROP(inst, x_offset),                                          \
+		.y_offset = DT_INST_PROP(inst, y_offset),                                          \
 		.width = DT_INST_PROP(inst, width),                                                \
 		.height = DT_INST_PROP(inst, height),                                              \
 	};                                                                                         \
