@@ -1,0 +1,3 @@
+description: Toggle the dongle screen orientation by 180 degrees
+compatible: "zmk,behavior-screen-rotate"
+include: zero_param.yaml
